@@ -1,0 +1,3 @@
+# Proxmox
+
+Proxmox is an open-source virtualization management platform that can be used to create and manage virtual machines (VMs) and containers in a self-hosted home lab environment. It allows users to easily create and manage virtualized environments, including virtualized servers and networks, using a web-based interface. With Proxmox, users can also create and manage virtual storage, making it a powerful tool for creating and managing a home lab for testing and development.
