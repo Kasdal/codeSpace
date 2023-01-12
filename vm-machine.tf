@@ -30,11 +30,4 @@ resource "proxmox_vm_qemu" "node" {
 
     ipconfig0 = "ip=192.168.1.${100 + count.index}/24,gw=192.168.1.254"
     nameserver = "192.168.1.254"
-    # (Optional) Default User
-     #ciuser = "root"
-    
-    # (Optional) Add your SSH KEY
-    # sshkeys = <<EOF
-    # #YOUR-PUBLIC-SSH-KEY
-    # EOF
 }
