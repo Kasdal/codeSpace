@@ -1,6 +1,7 @@
 credentials.auto.tfvars
 ansible/ansible.cfg
 ansible/hosts.ini
+.env
 # Local .terraform directories
 **/.terraform/*
 

@@ -1,0 +1,10 @@
+- name: Create a new user
+  hosts: all
+  vars:
+    new_user: ubuntu
+    new_user_password: XXXXXXX
+  tasks:
+    - name: Create new user
+      user:
+        name: "{{ new_user }}"
+        password: "{{ new_user_password | password_hash('sha512') }}"
