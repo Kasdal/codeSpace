@@ -1,0 +1,12 @@
+- name: Install and configure k3s on master nodes
+  hosts: master-node
+  become: true
+  tasks:
+  - name: Install k3s
+    shell: curl -sfL https://get.k3s.io | sh -
+  - name: Check k3s status
+    shell: systemctl status k3s
+  - name: Start k3s
+    shell: systemctl start k3s
+  - name: Enable k3s
+    shell: systemctl enable k3s

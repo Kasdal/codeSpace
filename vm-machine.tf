@@ -1,5 +1,5 @@
 resource "proxmox_vm_qemu" "node" {
-    count = 4
+    count = 5
 
     target_node = "proxmox"
     name = "node-${count.index}"
