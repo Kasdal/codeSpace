@@ -1,9 +1,30 @@
-- name: Install and configure k3s on master nodes
-  hosts: master-node
+- name: Install and configure k3s with etcd on master nodes
+  hosts: master
   become: true
+  vars:
+    etcd_nodes: "{{ groups['master'] | map('extract', hostvars, ['ansible_host']) | join(',') }}"
+  tasks:
+  - name: Install etcd
+    shell: curl -L https://github.com/etcd-io/etcd/releases/download/v3.4.13/etcd-v3.4.13-linux-amd64.tar.gz -o etcd-v3.4.13-linux-amd64.tar.gz && tar xzvf etcd-v3.4.13-linux-amd64.tar.gz && sudo mv etcd-v3.4.13-linux-amd64/etcd* /usr/local/bin/
+  - name: Start etcd
+    shell: etcd --listen-client-urls=http://0.0.0.0:2379 --advertise-client-urls=http://{{ ansible_host }}:2379 --initial-cluster {{ etcd_nodes }} --initial-cluster-state new --initial-cluster-token k3s-etcd-cluster --data-dir=/var/lib/etcd
+  - name: Install k3s
+    shell: curl -sfL https://get.k3s.io | K3S_URL=https://{{ inventory_hostname }}:6443 K3S_TOKEN=<token> K3S_ETCD_ENDPOINTS=http://{{ ansible_host }}:2379 sh -
+  - name: Check k3s status
+    shell: systemctl status k3s
+  - name: Start k3s
+    shell: systemctl start k3s
+  - name: Enable k3s
+    shell: systemctl enable k3s
+
+- name: Install and configure k3s with etcd on worker nodes
+  hosts: worker
+  become: true
+  vars:
+    etcd_nodes: "{{ groups['master'] | map('extract', hostvars, ['ansible_host']) | join(',') }}"
   tasks:
   - name: Install k3s
-    shell: curl -sfL https://get.k3s.io | sh -
+    shell: curl -sfL https://get.k3s.io | K3S_URL=https://{{ inventory_hostname }}:6443 K3S_TOKEN=<token> K3S_ETCD_ENDPOINTS=http://{{ etcd_nodes }} sh -
   - name: Check k3s status
     shell: systemctl status k3s
   - name: Start k3s
