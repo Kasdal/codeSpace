@@ -7,7 +7,7 @@ resource "proxmox_vm_qemu" "node" {
     full_clone = true
     onboot = true 
 
-    clone = "ubuntu-cloud"
+    clone = "ubuntu-2204"
 
     cores = 1
     sockets = 1
