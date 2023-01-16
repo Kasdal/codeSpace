@@ -2,7 +2,7 @@
   hosts: all
   vars:
     new_user: ubuntu
-    new_user_password: XXXXXXX
+    password: "{{ lookup('env','Password') }}"
   tasks:
     - name: Create new user
       user:

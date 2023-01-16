@@ -10,15 +10,15 @@ resource "proxmox_vm_qemu" "node" {
     clone = "ubuntu-jammy"
 
     cores = 1
-    sockets = 1
+    sockets = 2
     cpu = "host"    
 
-    memory = 1024
+    memory = 2048
 
     disk {
         type = "scsi"
         storage = "local-lvm"
-        size = "16G" 
+        size = "40G" 
     }
 
     network {
