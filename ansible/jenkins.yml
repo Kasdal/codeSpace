@@ -1,0 +1,25 @@
+---
+- name: Install JDK 11 and Jenkins
+  hosts: all
+  become: true
+  tasks:
+  - name: Add apt repository for OpenJDK 11
+    apt_repository:
+      repo: ppa:openjdk-r/ppa
+      state: present
+  - name: Install OpenJDK 11
+    apt:
+      name: openjdk-11-jdk
+      state: latest
+  - name: Import Jenkins GPG key
+    apt_key:
+      url: https://pkg.jenkins.io/debian-stable/jenkins.io.key
+      state: present
+  - name: Add Jenkins repository
+    apt_repository:
+      repo: deb https://pkg.jenkins.io/debian-stable binary/
+      state: present
+  - name: Install Jenkins
+    apt:
+      name: jenkins
+      state: latest
