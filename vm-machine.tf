@@ -2,18 +2,19 @@ resource "proxmox_vm_qemu" "node" {
     count = 1
 
     target_node = "proxmox"
-    name = "node-${count.index}"
+    agent = 1
+    name = "node-0${count.index}"
     desc = "Vme"
     full_clone = true
     onboot = true 
 
     clone = "ubuntu-jammy"
 
-    cores = 1
+    cores = 2
     sockets = 2
     cpu = "host"    
 
-    memory = 2048
+    memory = 4096
 
     disk {
         type = "scsi"
